@@ -8,6 +8,10 @@ the need to dump the output of queries to a file and vimdiff.
 The output of the script is the Delta between the two runs of the
 "show session status command"
 
+This script requires DocOpt (Pythonic command line arguments parser, that
+will make you smile http://docopt.org)
+
+
 Usage: queryStats [-v] [-h HOST] [-d DATABASE] [-s SOCKET | --port PORT] -u USERNAME -p [-f FILTER] -q QUERY ...
 
 Options:
