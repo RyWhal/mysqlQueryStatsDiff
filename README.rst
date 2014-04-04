@@ -3,7 +3,9 @@ Mysql_Query_Session_Stats_Diff
 
 This script will take a given query (ex. "select * from table") and run a
 "show session status" before and after that query. This script replaces
-the need to dump the output of queries to a file and vimdiff.
+the need to dump the output of queries to a file and vimdiff. This script
+is helpful for query performance tuning, making it easy to see how a query
+will impact your MySQL performance statistics.
 
 The output of the script is the Delta between the two runs of the
 "show session status" command
@@ -21,12 +23,12 @@ at https://github.com/docopt/docopt
     --help                  Print this help info.
     -h --host HOSTNAME      Specify MySQL hostname to connect to [default: localhost].
     -d --db DATABASE        Specify MySQL database [default: mysql].
-    -s --socket SOCKET      Specify socket.
-    -P --port PORT          Specify port [default: 3306].
+    -s --socket SOCKET      Specify connection socket.
+    -P --port PORT          Specify connection port [default: 3306].
     -u --username USERNAME  Specify your MySQL username.
     -p --password           Password mode.
-    -f --filter FILTER      Specify filter.
-    -q --query QUERY        Specify query.
+    -f --filter FILTER      Specify filter keyword.
+    -q --query QUERY        Specify Mysql query.
     -v --verbose            Specify to use verbose mode
 
 
