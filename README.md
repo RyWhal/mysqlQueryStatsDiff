@@ -10,14 +10,23 @@ The output of the script is the Delta between the two runs of the
 
 Usage: queryStats [-v] [-h HOST] [-d DATABASE] [-s SOCKET | --port PORT] -u USERNAME -p [-f FILTER] -q QUERY ...
 
-Options:</br>
---help                  you're looking at it.</br>
--h --host HOSTNAME      Specify hostname [default: localhost].</br>
--d --db DATABASE        Specify database [default: mysql].</br>
--s --socket SOCKET      Specify socket.</br>
--P --port PORT          Specify port [default: 3306].</br>
--u --username USERNAME  Specify username.</br>
--p --password           Password mode.</br>
--f --filter FILTER      Specify filter.</br>
--q --query QUERY        Specify query.</br>
--v --verbose            Specify to use verbose mode</br>
+Options:
+--help                  you're looking at it.
+
+-h --host HOSTNAME      Specify hostname [default: localhost].
+
+-d --db DATABASE        Specify database [default: mysql].
+
+-s --socket SOCKET      Specify socket.
+
+-P --port PORT          Specify port [default: 3306].
+
+-u --username USERNAME  Specify username.
+
+-p --password           Password mode.
+
+-f --filter FILTER      Specify filter.
+
+-q --query QUERY        Specify query.
+
+-v --verbose            Specify to use verbose mode
