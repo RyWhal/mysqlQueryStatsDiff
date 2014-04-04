@@ -27,3 +27,25 @@ will make you smile http://docopt.org)
     -f --filter FILTER      Specify filter.
     -q --query QUERY        Specify query.
     -v --verbose            Specify to use verbose mode
+
+
+Example:
+
+.. code:: bash
+
+    % python queryStats -h localhost -d mysql -P 3306 -u ryan -p -q "Select * from users.information where user_id LIKE admin"
+    Password:
+    hostname: localhost
+    database: mysql
+    port: 3306
+    query: Select * from users.information where user_id LIKE admin
+
+
+    Bytes_received =         136 -->  177
+        Bytes_sent =         110 --> 8562
+   Com_show_grants =           0 -->    1
+   Com_show_status =           1 -->    2
+           Queries =         986 -->  988
+         Questions =           2 -->    4
+
+
