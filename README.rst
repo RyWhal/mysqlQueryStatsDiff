@@ -14,15 +14,15 @@ will make you smile http://docopt.org)
 
 .. code:: python
 
-    Usage: queryStats [-v] [-h HOST] [-d DATABASE] [-s SOCKET | --port PORT] -u USERNAME -p [-f FILTER] -q QUERY ...
+    Usage: queryStats [-v] -h HOST [-d DATABASE] (-s SOCKET | --port PORT) -u USERNAME -p [-f FILTER] -q QUERY ...
 
     Options:
-    --help                  you're looking at it.
-    -h --host HOSTNAME      Specify hostname [default: localhost].
-    -d --db DATABASE        Specify database [default: mysql].
+    --help                  Print this help info.
+    -h --host HOSTNAME      Specify MySQL hostname to connect to [default: localhost].
+    -d --db DATABASE        Specify MySQL database [default: mysql].
     -s --socket SOCKET      Specify socket.
     -P --port PORT          Specify port [default: 3306].
-    -u --username USERNAME  Specify username.
+    -u --username USERNAME  Specify your MySQL username.
     -p --password           Password mode.
     -f --filter FILTER      Specify filter.
     -q --query QUERY        Specify query.

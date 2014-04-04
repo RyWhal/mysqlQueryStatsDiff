@@ -1,0 +1,147 @@
+#!/usr/bin/env python2.6
+
+"""
+This script will take a given query (ex. "select * from table") and run a
+"show session status" before and after that query. This script replaces
+the need to dump the output of queries to a file and vimdiff.
+
+The output of the script is the Delta between the two runs of the
+"show session status command"
+
+Usage: queryStats [-v] [-h HOST] [-d DATABASE] [-s SOCKET | --port PORT] -u USERNAME -p [-f FILTER] -q QUERY ...
+
+Options:
+--help                  you're looking at it.
+-h --host HOSTNAME      Specify hostname [default: localhost].
+-d --db DATABASE        Specify database [default: mysql].
+-s --socket SOCKET      Specify socket.
+-P --port PORT          Specify port [default: 3306].
+-u --username USERNAME  Specify username.
+-p --password           Password mode.
+-f --filter FILTER      Specify filter.
+-q --query QUERY        Specify query.
+-v --verbose            Specify to use verbose mode
+"""
+
+from docopt import docopt
+import sys
+import getpass
+import MySQLdb
+
+def main(args):
+
+    #variable imports from docopt arguments
+    if args['--password']:
+        password = getpass.getpass()
+    query = ' '.join(args['--query'])
+    hostname = args['--host']
+    database = args['--db']
+    port = args['--port']
+    socket = args['--socket']
+    username = args['--username']
+    filter = args['--filter']
+
+    #need to cast port as an int to use in mysql connect
+    port = int(port)
+
+    #call the mysql_connect function and set the returned cursor object to 'cur'
+    cur = mysql_connect(args, hostname, username, password, database, socket, port)
+
+    #declaring arrays which will ultimately hold the displayed info
+    first_status = {}
+    second_staus = {}
+    status_names = {}
+
+    #variables for setting column widths
+    width_first = 0
+    width_second = 0
+    width_third = 0
+
+    #print out connection information and query
+    print "hostname:", hostname
+    print "database:", database
+    if args['--port']:
+        print "port:", port
+    if args['--socket']:
+        print "socket:", socket
+    if args['--filter']:
+        print "filter:", filter
+    print "query:", query
+
+    #excute the first "show session status"
+    show_session_status(cur, filter)
+
+    #load the results from the first "show session status" into "first_status" array
+    for row in cur.fetchall() :
+        first_status[row[0]]=row[1]
+        if len(first_status[row[0]]) > width_second:
+            width_second=len(first_status[row[0]])
+
+    #this runs the specified query
+    cur.execute(query)
+    print "\n";
+
+    #excute the second "show session status"
+    show_session_status(cur, filter)
+
+    #determine the width of the output columns
+    for row in cur.fetchall():
+        if first_status[row[0]] == row[1]:
+            continue
+        if len(row[0]) > width_first:
+            width_first=len(row[0])
+        if len(row[1]) > width_third:
+            width_third=len(row[1])
+
+    cur.scroll(0,'absolute')
+
+    #print everything out if verbose mode is set
+    if args['--verbose']:
+        for row in cur.fetchall():
+            print "%*s = %*s --> %*s" % (width_first,row[0],width_second,first_status[row[0]],width_third,row[1])
+        print '\n'
+
+    #else print only lines that have changed values
+    else:
+        for row in cur.fetchall():
+            if first_status[row[0]] != row[1]:
+                print "%*s = %*s --> %*s" % (width_first,row[0],width_second,first_status[row[0]],width_third,row[1])
+        print '\n'
+
+#function to run "show session status"
+def show_session_status(cur, filter):
+    if filter is None:
+        cur.execute("show session status;")
+    else:
+        cur.execute("show session status where variable_name LIKE '%"+filter+"%';")
+
+#function to establish mysql connection
+def mysql_connect(args, hostname, username, password, database, socket, port):
+    #connect using port
+    if args['--port']:
+        db = MySQLdb.connect(host = hostname,
+            user = username,
+            passwd = password,
+            db = database,
+            port = port,
+        )
+
+    #connect using socket
+    elif args['--socket']:
+        db = MySQLdb.connect(host = hostname,
+            user = username,
+            passwd = password,
+            db = database,
+            socket = socket,
+        )
+
+    else:
+        print "Socket or Port is required"
+
+    #return db.cursor object to main
+    return(db.cursor())
+
+if __name__ == "__main__":
+    sys.exit(
+        main(docopt(__doc__))
+    )
