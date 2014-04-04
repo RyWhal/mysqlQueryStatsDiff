@@ -1,4 +1,4 @@
-mysqlQueryStatsDiff
+Mysql_Query_Session_Stats_Diff
 ===================
 
 This script will take a given query (ex. "select * from table") and run a
@@ -6,10 +6,11 @@ This script will take a given query (ex. "select * from table") and run a
 the need to dump the output of queries to a file and vimdiff.
 
 The output of the script is the Delta between the two runs of the
-"show session status command"
+"show session status" command
 
 This script requires DocOpt (Pythonic command line arguments parser, that
-will make you smile http://docopt.org)
+will make you smile http://docopt.org). Also check out their github page
+at https://github.com/docopt/docopt 
 
 
 .. code:: python
@@ -29,7 +30,7 @@ will make you smile http://docopt.org)
     -v --verbose            Specify to use verbose mode
 
 
-Example:
+Example usage:
 
 .. code:: bash
 
