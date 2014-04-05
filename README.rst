@@ -1,4 +1,4 @@
-Mysql_Query_Session_Stats_Diff
+Mysql Query Session Stats Diff
 ===================
 
 This script will take a given query (ex. "select * from table") and run a
