@@ -9,9 +9,10 @@ The output of the script is the Delta between the two runs of the
 "show session status command"
 
 Usage: queryStats [-v] [-h HOST] [-d DATABASE] (-s SOCKET | --port PORT) -u USERNAME -p [-f FILTER] -q QUERY ...
+       queryStats --help
 
 Options:
---help                  Print this help page
+--help                  Print this page
 -h --host HOSTNAME      Specify MySQL Database hostname [default: localhost].
 -d --db DATABASE        Specify MySQL database [default: mysql].
 -s --socket SOCKET      Specify socket.
@@ -77,7 +78,7 @@ def main(args):
         if len(first_status[row[0]]) > width_second:
             width_second=len(first_status[row[0]])
 
-    #this runs the specified query
+    #this runs the specified query we're getting stats on
     cur.execute(query)
     print "\n";
 
